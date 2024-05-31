@@ -1,0 +1,124 @@
+/* styles.css */
+body {
+    background-color: #fff;
+    color: #212529;
+    margin: 0;
+    padding: 0;
+    font-size: 16px;
+    font-family: "Roboto Mono", monospace;
+    font-optical-sizing: auto;
+    font-weight: 400;
+    font-style: normal;
+}
+
+header {
+    background-color: #fff;
+    color: #000;
+    padding: 20px 0;
+}
+
+h1, h2 {
+    color: #000;
+    font-family: "Rubik", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 600;
+    font-style: normal;
+}
+
+.container {
+    margin: auto;
+    padding: 20px;
+}
+
+ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+li {
+    padding: 5px 0;
+}
+
+section {
+    margin-bottom: 20px;
+}
+
+input, textarea, button {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 10px;
+}
+
+button.btn-primary {
+    background-color: #ffc0cb;
+    color: white;
+    border: none;
+    border-radius: 0; /* Flat design style */
+}
+
+button.btn-primary:hover {
+    background-color: #ff91a4;
+}
+
+footer {
+    background: #000;
+    color: #fff;
+}
+
+footer a {
+    color: #ffc0cb;
+    text-decoration: none;
+}
+
+@media (max-width: 768px) {
+    .container {
+        padding: 10px;
+    }
+}
+
+.container {
+    min-height: 33vh;
+}
+
+section {
+    margin-bottom: 12.5vh;
+}
+
+section div:not(.presentation) {
+    padding-top: 12.5vh;
+}
+#about{
+    min-height: 100vh;
+    margin-bottom: 3vh;
+}
+
+.centered-div {
+    margin: 0;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    -ms-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+}
+
+.centered-div h2 {
+    font-size: 8.5rem;
+  }
+
+  .presentation {
+    margin: 12.5vh 0;
+  }
+
+  #skills span {
+    font-size: 1.25rem;
+    font-weight: 600;
+    font-family: "Rubik", sans-serif;
+  }
+
+  #presentations {
+    min-height: 33vh;
+  }
+
+  footer.text-center {
+    padding: 5vh 0;
+  }
