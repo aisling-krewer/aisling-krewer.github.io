@@ -2,10 +2,13 @@
 body {
     background-color: #fff;
     color: #212529;
-    font-family: 'Arial', sans-serif;
     margin: 0;
     padding: 0;
     font-size: 16px;
+    font-family: "Roboto Mono", monospace;
+    font-optical-sizing: auto;
+    font-weight: 400;
+    font-style: normal;
 }
 
 header {
@@ -16,10 +19,13 @@ header {
 
 h1, h2 {
     color: #000;
+    font-family: "Rubik", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 600;
+    font-style: normal;
 }
 
 .container {
-    max-width: 960px;
     margin: auto;
     padding: 20px;
 }
@@ -70,7 +76,49 @@ footer a {
     }
 }
 
+.container {
+    min-height: 33vh;
+}
+
 section {
+    margin-bottom: 12.5vh;
+}
+
+section div:not(.presentation) {
+    padding-top: 12.5vh;
+}
+#about{
     min-height: 100vh;
     margin-bottom: 3vh;
 }
+
+.centered-div {
+    margin: 0;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    -ms-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+}
+
+.centered-div h2 {
+    font-size: 8.5rem;
+  }
+
+  .presentation {
+    margin: 12.5vh 0;
+  }
+
+  #skills span {
+    font-size: 1.25rem;
+    font-weight: 600;
+    font-family: "Rubik", sans-serif;
+  }
+
+  #presentations {
+    min-height: 33vh;
+  }
+
+  footer.text-center {
+    padding: 5vh 0;
+  }
