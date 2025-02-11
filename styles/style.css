@@ -4,11 +4,6 @@ html, body {
     font-family: "dm", monospace;
 }
 
-section {
-    height: 100vh;
-    scroll-snap-align: start; /* Ensures each section snaps into place */
-}
-
 body {
     background-color: #fff;
     color: #212529;
@@ -136,14 +131,28 @@ section {
   }
 
   section {
+    scroll-snap-align: start;
     height: 100vh;
     padding: 10vh;
     position: relative;
+
+    @media (max-width: 1280px) {
+        & {
+            height: unset;
+        }
+            
+    }
   }
 
   #skills .inner-container {
     flex-direction: row;
     height: fit-content;
+    @media (max-width: 1280px) {
+        & {
+            flex-direction: column;
+        }
+            
+    }
   }
 
   .skills-container {
