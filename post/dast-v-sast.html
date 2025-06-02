@@ -1,0 +1,206 @@
+<!DOCTYPE HTML>
+<!--
+	Photon by HTML5 UP
+	html5up.net | @ajlkn
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
+	<head>
+		<title>Aisling Krewer</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="stylesheet" href="../assets/css/main.css" />
+        <link rel="stylesheet" href="../assets/css/custom.css" />
+		<noscript><link rel="stylesheet" href="../assets/css/noscript.css" /></noscript>
+	</head>
+	<body class="is-preload">
+
+		<!-- Header -->
+			<section id="header">
+				<div class="inner">
+					<span class="icon solid major fa-cloud"></span>
+
+					<h1>SAST vs DAST</h1>
+
+				</div>
+			</section>
+
+			<section id="one" class="main style1">
+				<div class="container">
+                    <div>
+                        <h2>Understanding SAST and DAST: A Comprehensive Guide</h2>
+                        <p>In the world of application security, two acronyms often come up: <strong>SAST</strong> and <strong>DAST</strong>. Both are essential tools in a security professional's toolkit, but they serve different purposes and have unique strengths. In this article, we’ll explore the differences between Static Application Security Testing (SAST) and Dynamic Application Security Testing (DAST), when to use each, and how to implement them effectively.</p>
+
+                        <h3>What is SAST?</h3>
+                        <p>
+                            Static Application Security Testing analyzes your source code, byte-code, or binary code without executing the program. Think of it as a very sophisticated code review that happens automatically, scanning for known vulnerability patterns and security anti-patterns.
+                        </p>
+                        <p>SAST tools examine your codebase looking for issues like:</p>
+                        <ul>
+                            <li>SQL injection vulnerabilities in database queries</li>
+                            <li>Cross-site scripting (XSS) opportunities in web applications</li>
+                            <li>Buffer overflows in memory management</li>
+                            <li>Hard-coded secrets and credentials</li>
+                            <li>Insecure cryptographic implementations</li>
+                            <li>Authentication and authorization flaws</li>
+                        </ul>
+                        <p>
+                            Popular SAST tools include <strong>SonarQube</strong>, <strong>Checkmarx</strong>, and open-source options like <strong>Semgrep</strong> and <strong>CodeQL</strong>.
+                        </p>
+
+                        <h3>What is DAST?</h3>
+                        <p>
+                            Dynamic Application Security Testing takes the opposite approach - it tests your running application from the outside, much like an attacker would. DAST tools don’t need access to your source code; they interact with your application through its interfaces, sending various inputs and observing the responses.
+                        </p>
+                        <p>DAST excels at finding:</p>
+                        <ul>
+                            <li>Runtime vulnerabilities that only appear when the application is running</li>
+                            <li>Configuration issues in web servers and application servers</li>
+                            <li>Authentication bypass opportunities</li>
+                            <li>Session management flaws</li>
+                            <li>Business logic vulnerabilities</li>
+                            <li>Integration issues between different components</li>
+                        </ul>
+                        <p>
+                            Common DAST tools include <strong>OWASP ZAP</strong>, <strong>Burp Suite</strong>, and <strong>Nessus</strong>.
+                        </p>
+
+                        <h3>The Key Differences</h3>
+
+                        <h4>Timing in Development Lifecycle</h4>
+                        <p>
+                            SAST shines early in development. You can run static analysis on every commit, catching vulnerabilities before they ever reach production. DAST requires a running application, making it more suitable for testing environments and pre-production deployments.
+                        </p>
+
+                        <h4>Coverage and Accuracy</h4>
+                        <p>
+                            SAST can analyze 100% of your codebase, including rarely executed paths and error conditions. However, it often produces false positives because it lacks runtime context. DAST only tests what it can reach through the user interface, potentially missing functionality, but its findings are typically more accurate, since they represent real exploitable vulnerabilities.
+                        </p>
+
+                        <h4>Speed and Integration</h4>
+                        <p>
+                            Static analysis is generally faster and integrates seamlessly into CI/CD pipelines. You can fail builds based on SAST findings and provide immediate feedback to developers. DAST takes longer to run comprehensive scans and requires more complex steps to integrate into automated workflows.
+                        </p>
+
+                        <h4>Vulnerability Types</h4>
+                        <p>
+                            Each approach excels at finding different types of vulnerabilities. SAST is excellent for code-level issues like injection flaws and cryptographic problems. DAST is better at finding configuration issues, authentication problems, and complex business logic vulnerabilities that emerge from component interactions.
+                        </p>
+
+                        <h3>When to Use SAST</h3>
+                        <p>Choose SAST when you want to:</p>
+                        <ul>
+                            <li>Shift security left in your development process</li>
+                            <li>Educate developers about secure coding practices through immediate feedback</li>
+                            <li>Maintain compliance requirements that mandate source code analysis</li>
+                            <li>Scale security reviews across multiple development teams</li>
+                            <li>Find vulnerabilities early when they’re cheapest to fix</li>
+                        </ul>
+                        <p>
+                            SAST is valuable for organizations with large development teams, strict compliance requirements, or applications handling sensitive data where early detection is critical.
+                        </p>
+
+                        <h3>When to Use DAST</h3>
+                        <p>Prioritize DAST when you need to:</p>
+                        <ul>
+                            <li>Validate real-world exploitability of potential vulnerabilities</li>
+                            <li>Test third-party components and integrations you don’t control</li>
+                            <li>Simulate attacker behavior against your running application</li>
+                            <li>Verify security configurations in your deployment environment</li>
+                            <li>Test applications where you don’t have source code access</li>
+                        </ul>
+                        <p>
+                            DAST is essential for organizations with complex deployment environments, heavy use of third-party services, or applications where runtime behavior significantly differs from static code analysis.
+                        </p>
+
+                        <h3>The Best Approach: Both</h3>
+                        <p>The most effective application security programs use both SAST and DAST strategically:</p>
+                        <ul>
+                            <li>
+                                <strong>Early Development (SAST Focus)</strong>
+                                <ul>
+                                    <li>Integrate SAST into your IDE and CI/CD pipeline</li>
+                                    <li>Use it for developer education and immediate feedback</li>
+                                    <li>Focus on high-confidence findings to avoid alert fatigue</li>
+                                    <li>Customize rules for your specific technology stack and coding standards</li>
+                                </ul>
+                            </li>
+                            <li>
+                                <strong>Pre-Production and Production (DAST Focus)</strong>
+                                <ul>
+                                    <li>Run comprehensive DAST scans in staging environments</li>
+                                    <li>Use DAST to validate SAST findings and discover new vulnerability classes</li>
+                                    <li>Schedule regular DAST scans of production applications</li>
+                                    <li>Integrate DAST into your penetration testing and red team exercises</li>
+                                </ul>
+                            </li>
+                        </ul>
+
+                        <h3>Implementation Tips</h3>
+                        <ul>
+                            <li>
+                                <strong>For SAST Success:</strong>
+                                <ul>
+                                    <li>Start with a pilot project and gradually expand coverage</li>
+                                    <li>Tune your rules to reduce false positives in your specific environment</li>
+                                    <li>Provide developer training on how to interpret and fix findings</li>
+                                    <li>Integrate findings into your existing bug tracking and project management tools</li>
+                                </ul>
+                            </li>
+                            <li>
+                                <strong>For DAST Success:</strong>
+                                <ul>
+                                    <li>Ensure your test environments closely mirror production</li>
+                                    <li>Provide authentication credentials for comprehensive coverage</li>
+                                    <li>Schedule scans during maintenance windows to avoid impacting users</li>
+                                    <li>Combine automated DAST with manual security testing for maximum effectiveness</li>
+                                </ul>
+                            </li>
+                        </ul>
+
+                        <h3>Measuring Success</h3>
+                        <p>Track metrics that matter for both approaches:</p>
+                        <ul>
+                            <li>Mean time to remediation for different vulnerability types</li>
+                            <li>False positive rates and how they change over time</li>
+                            <li>Coverage metrics showing what percentage of your application surface is being tested</li>
+                            <li>Developer adoption and engagement with security findings</li>
+                        </ul>
+
+                        <h3>Conclusion</h3>
+                        <p>
+                            SAST and DAST aren’t competing approaches - they’re complementary tools that address different aspects of application security. SAST helps you build security into your development process from the ground up, while DAST validates that your security controls work as intended in the real world.
+                        </p>
+                        <p>
+                            The key is implementing both strategically, with SAST providing fast feedback early in development and DAST offering comprehensive validation later. Organizations that successfully combine both approaches typically see significant improvements in their overall security posture and a reduction in vulnerabilities reaching production.
+                        </p>
+                        <p>
+                            Start with whichever approach fits your current development workflow better, but plan to implement both as your application security program matures. Your future self - and your security team - will thank you for the comprehensive coverage.
+                        </p>
+                    </div>
+				</div>
+			</section>
+
+		<!-- Footer -->
+			<section id="footer">
+				<ul class="icons">
+					<li><a href="https://www.instagram.com/galway.it.meetup/" class="icon brands alt fa-instagram"><span class="label">Instagram</span></a></li>
+					<li><a href="https://www.linkedin.com/in/aislingkrewer" class="icon brands alt fa-linkedin "><span class="label">LinkedIn</span></a></li>
+					<li><a href="mailto:hello@aislingkrewer.com" class="icon solid alt fa-envelope"><span class="label">Email</span></a></li>
+                    <li><a href="https://aislingkrewer.com/files/CompTIA%20Security+%20ce%20certificate-1.pdf" class="icon solid fa-certificate"><span class="label">Verify Security+</span></a></li>
+				</ul>
+				<ul class="copyright">
+					<li>Design: <a href="http://html5up.net">HTML5 UP</a></li>
+				</ul>
+			</section>
+
+		<!-- Scripts -->
+			<script src="../assets/js/jquery.min.js"></script>
+			<script src="../assets/js/jquery.scrolly.min.js"></script>
+			<script src="../assets/js/browser.min.js"></script>
+			<script src="../assets/js/breakpoints.min.js"></script>
+			<script src="../assets/js/util.js"></script>
+			<script src="../assets/js/main.js"></script>
+
+	</body>
+</html>
