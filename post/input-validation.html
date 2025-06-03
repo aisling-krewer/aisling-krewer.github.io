@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<!--
+	Photon by HTML5 UP
+	html5up.net | @ajlkn
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
+  <head>
+    <title>Aisling Krewer</title>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, user-scalable=no"
+    />
+    <link rel="stylesheet" href="../assets/css/main.css" />
+    <link rel="stylesheet" href="../assets/css/custom.css" />
+    <noscript
+      ><link rel="stylesheet" href="../assets/css/noscript.css"
+    /></noscript>
+  </head>
+  <body class="is-preload">
+    <!-- Header -->
+    <section id="header">
+      <div class="inner">
+        <span class="icon solid major fa-pencil-alt"></span>
+
+        <h1>Input Validation</h1>
+      </div>
+    </section>
+
+    <section id="one" class="main style1">
+      <div class="container">
+        <article>
+          <p>
+            Every security breach has a story, and too many of them start the
+            same way: "We trusted user input." Input validation is your
+            application's first line of defense, yet it's one of the most
+            commonly misunderstood aspects of secure development.
+          </p>
+
+          <p>
+            The good news? Most input validation vulnerabilities follow
+            predictable patterns. Once you understand these patterns-and their
+            corresponding pitfalls-you can build robust defenses that actually
+            work.
+          </p>
+
+          <h2>The Foundation: Never Trust, Always Verify</h2>
+
+          <p>
+            Input validation isn't just about preventing malicious attacks. It's
+            about maintaining data integrity, ensuring system stability, and
+            creating predictable application behavior. Every piece of data
+            entering your application should be validated against your
+            expectations before you process it further.
+          </p>
+
+          <p>
+            This includes obvious sources like form fields and API parameters,
+            but also less obvious ones like HTTP headers, file uploads, database
+            results from external sources, and even configuration files. If data
+            crosses a trust boundary into your application, it needs validation.
+          </p>
+
+          <h2>Pattern 1: Whitelist Over Blacklist</h2>
+
+          <p>
+            The most fundamental principle of input validation is simple: define
+            what you accept, don't try to block what you reject.
+          </p>
+
+          <p><strong>The Right Way:</strong></p>
+          <pre><code>// Accept only alphanumeric characters and specific symbols
+        function validateUsername(username) {
+            const allowedPattern = /^[a-zA-Z0-9_-]{3,20}$/;
+            return allowedPattern.test(username);
+        }</code></pre>
+
+         <p><strong>The Wrong Way:</strong></p>
+         <pre><code>// Try to block dangerous characters (incomplete and fragile)
+        function validateUsernameBad(username) {
+            const dangerousChars = ['&lt;', '&gt;', '"', "'", '&amp;', ';'];
+            return !dangerousChars.some(char =&gt; username.includes(char));
+        }</code></pre>
+
+          <p>
+            Blacklists fail because attackers are creative. They'll find
+            characters you didn't think to block, encoding techniques you didn't
+            consider, or edge cases in your logic. Whitelists are explicit about
+            what's acceptable and reject everything else by default.
+          </p>
+
+          <h2>Pattern 2: Validate Early, Validate Often</h2>
+
+          <p>
+            Implement validation at multiple layers of your application. This
+            defense-in-depth approach ensures that even if one layer fails,
+            others will catch malicious input.
+          </p>
+
+          <p>
+            <strong>Client-Side Validation:</strong> Improves user experience
+            but provides no security. Always assume client-side validation can
+            be bypassed.
+          </p>
+
+          <p>
+            <strong>API Gateway/Load Balancer:</strong> Basic checks like
+            request size limits and rate limiting before requests reach your
+            application.
+          </p>
+
+          <p>
+            <strong>Application Entry Points:</strong> Comprehensive validation
+            of all incoming data against your business rules and security
+            requirements.
+          </p>
+
+          <p>
+            <strong>Database Layer:</strong> Final validation using constraints,
+            stored procedures, or ORM validations to prevent data corruption.
+          </p>
+
+          <h2>Pattern 3: Context-Aware Validation</h2>
+
+          <p>
+            Different contexts require different validation strategies. An email
+            address has different validation requirements when used for
+            authentication versus when stored as a contact field.
+          </p>
+
+          <p>
+            <strong>For Database Queries:</strong><br />
+            Use parameterized queries and validate data types, lengths, and
+            formats.
+          </p>
+
+          <p>
+            <strong>For HTML Output:</strong><br />
+            Validate against HTML injection patterns and use proper escaping for
+            the output context.
+          </p>
+
+          <p>
+            <strong>For File Paths:</strong><br />
+            Validate against directory traversal attacks and restrict to
+            expected file types and locations.
+          </p>
+
+          <p>
+            <strong>For Shell Commands:</strong><br />
+            Avoid shell execution entirely when possible, but if necessary, use
+            strict whitelisting and parameterized execution.
+          </p>
+
+          <h2>Common Pitfalls That Kill Security</h2>
+
+          <h3>Pitfall 1: Validation After Processing</h3>
+
+          <p>
+            Many applications validate input after they've already used it for
+            database queries or file operations. This is like checking if your
+            front door is locked while leaving the back door wide open.
+          </p>
+
+          <pre><code>// Wrong: Process first, validate later
+            const userId = req.body.user_id;
+            const user = await database.getUser(userId);  // Vulnerable to injection
+            if (!validateUserId(userId)) {
+                return res.status(400).json({ error: "Invalid user ID" });
+          }</code></pre>
+
+          <p>
+            Always validate input immediately upon receiving it, before any
+            processing occurs.
+          </p>
+
+          <h3>Pitfall 2: Inconsistent Validation Logic</h3>
+
+          <p>
+            Different parts of your application using different validation rules
+            for the same data type creates security gaps. Attackers will find
+            the weakest validation point and exploit it.
+          </p>
+
+          <p>
+            Create centralized validation functions for common data types and
+            reuse them consistently across your application. This also makes
+            updates easier when you need to strengthen validation rules.
+          </p>
+
+          <h3>Pitfall 3: Length Without Content Validation</h3>
+
+          <p>
+            Checking only the length of input while ignoring its content is like
+            checking if someone knocked on your door without looking to see who
+            it is.
+          </p>
+
+          <pre><code>// Insufficient: Only checks length
+            function validateComment(comment) {
+                return comment.length &lt;= 500;
+            }
+
+            // Better: Checks length and content
+            function validateComment(comment) {
+                if (comment.length &gt; 500) {
+                    return false;
+                }
+                // Check for script tags, SQL keywords, etc.
+                const dangerousPatterns = [
+                    /&lt;script/i,
+                    /javascript:/i,
+                    /SELECT.*FROM/i
+                ];
+                return !dangerousPatterns.some(pattern =&gt; pattern.test(comment));
+            }
+          </code></pre>
+
+          <h3>Pitfall 4: Encoding Confusion</h3>
+
+          <p>
+            Attackers often bypass validation by encoding malicious input in
+            unexpected ways. Your validation might check for
+            <code>&lt;script&gt;</code> but miss <code>%3Cscript%3E</code> or
+            <code>&amp;lt;script&amp;gt;</code>.
+          </p>
+
+          <p>
+            Decode input to its canonical form before validation, and be aware
+            of double-encoding attacks where malicious content is encoded
+            multiple times.
+          </p>
+
+          <p>
+            I once encountered a government service where the frontend
+            validation accepted special characters in passwords, but the backend
+            password reset system silently rejected them. This led to much
+            confusion when I needed to access some information urgently - my
+            initial assumption was that my password manager somehow let me down!
+            With some trial and error I was able to work out the hidden password
+            requirements, and successfully access my data. I tried to reach out
+            to highlight this issue, but I have received no response.
+          </p>
+
+          <h3>Pitfall 5: Trusting "Internal" Data Sources</h3>
+
+          <p>
+            Just because data comes from your database or an internal API
+            doesn't mean it's safe. Data integrity can be compromised through
+            SQL injection, insider threats, or compromised internal systems.
+          </p>
+
+          <p>
+            Validate data even when it comes from sources you control,
+            especially when that data will be displayed to users or used in
+            security-sensitive operations.
+          </p>
+
+          <h2>Practical Implementation Strategies</h2>
+
+          <h3>Create a Validation Library</h3>
+
+          <p>
+            Build a centralized library of validation functions for your common
+            data types. Include validators for email addresses, phone numbers,
+            postal codes, credit card numbers, and any domain-specific data
+            formats your application uses.
+          </p>
+
+          <pre><code>class Validators {
+            static email(email) {
+                const pattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+                return pattern.test(email) &amp;&amp; email.length &lt;= 254;
+            }
+            
+            static phoneNumber(phone) {
+                // Remove formatting and validate digits
+                const digitsOnly = phone.replace(/[^\d]/g, '');
+                return digitsOnly.length &gt;= 10 &amp;&amp; digitsOnly.length &lt;= 15;
+            }
+        }</code></pre>
+
+          <p>
+            When building validation libraries, resist the urge to be overly
+            restrictive. Email validators that reject valid addresses with plus
+            signs or international domains force users to use different email
+            addresses than they prefer.
+          </p>
+
+          <h3>Use Schema Validation</h3>
+
+          <p>
+            For complex data structures like JSON APIs, use schema validation
+            libraries. They provide declarative ways to define validation rules
+            and automatically handle common edge cases.
+          </p>
+
+          <h3>Implement Progressive Validation</h3>
+
+          <p>
+            For user-facing applications, implement validation that provides
+            helpful feedback. Start with basic format checks, then move to more
+            complex business rule validation.
+          </p>
+
+          <p>
+            Consider the difference between rejecting a password immediately for
+            being "too simple" versus providing real-time feedback about
+            password strength. The latter guides users toward better security
+            choices without creating barriers. Complex password requirements
+            often backfire when they're too difficult to remember, leading to
+            insecure practices like writing passwords down.
+          </p>
+
+          <h3>Log Validation Failures</h3>
+
+          <p>
+            Track validation failures in your security logs. Unusual patterns of
+            validation failures often indicate reconnaissance or active attacks
+            against your application.
+          </p>
+
+          <h2>Testing Your Validation</h2>
+
+          <p>
+            Comprehensive testing is crucial for effective input validation.
+            Include these test cases in your security testing:
+          </p>
+
+          <p>
+            <strong>Boundary Testing:</strong> Test the edges of your validation
+            rules with inputs that are just inside and just outside acceptable
+            ranges.
+          </p>
+
+          <p>
+            <strong>Encoding Tests:</strong> Submit the same malicious input
+            using different encoding schemes (URL encoding, HTML entities,
+            Unicode variations).
+          </p>
+
+          <p>
+            <strong>Injection Tests:</strong> Test for SQL injection, XSS,
+            command injection, and other injection attacks specific to your
+            application context.
+          </p>
+
+          <p>
+            <strong>Fuzzing:</strong> Use automated tools to generate random
+            inputs and observe how your validation handles unexpected data.
+          </p>
+
+          <h2>Monitoring and Maintenance</h2>
+
+          <p>
+            Input validation isn't a set-it-and-forget-it security control.
+            Attack techniques evolve, and your validation rules need to evolve
+            with them.
+          </p>
+
+          <p>
+            Regularly review your validation logic as part of security
+            assessments. Monitor security advisories for new attack techniques
+            that might bypass your current validation. Update validation rules
+            when you add new features or modify existing functionality.
+          </p>
+
+          <h2>Conclusion</h2>
+
+          <p>
+            Effective input validation requires thinking like both a developer
+            and an attacker. You need to understand not just what your
+            application expects, but also what malicious users might try to
+            send.
+          </p>
+
+          <p>
+            The patterns outlined here—whitelist validation, layered defense,
+            context-aware validation—form the foundation of robust input
+            handling. Avoiding the common pitfalls described will prevent the
+            majority of input-based vulnerabilities.
+          </p>
+
+          <p>
+            Remember that input validation is just one part of a comprehensive
+            security strategy. Combine it with proper output encoding,
+            parameterized queries, and defense-in-depth principles for maximum
+            effectiveness.
+          </p>
+        </article>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <section id="footer">
+      <ul class="icons">
+        <li>
+          <a
+            href="https://www.instagram.com/galway.it.meetup/"
+            class="icon brands alt fa-instagram"
+            ><span class="label">Instagram</span></a
+          >
+        </li>
+        <li>
+          <a
+            href="https://www.linkedin.com/in/aislingkrewer"
+            class="icon brands alt fa-linkedin"
+            ><span class="label">LinkedIn</span></a
+          >
+        </li>
+        <li>
+          <a
+            href="mailto:hello@aislingkrewer.com"
+            class="icon solid alt fa-envelope"
+            ><span class="label">Email</span></a
+          >
+        </li>
+        <li>
+          <a
+            href="https://aislingkrewer.com/files/CompTIA%20Security+%20ce%20certificate-1.pdf"
+            class="icon solid fa-certificate"
+            ><span class="label">Verify Security+</span></a
+          >
+        </li>
+      </ul>
+      <ul class="copyright">
+        <li>Design: <a href="http://html5up.net">HTML5 UP</a></li>
+      </ul>
+    </section>
+
+    <!-- Scripts -->
+    <script src="../assets/js/jquery.min.js"></script>
+    <script src="../assets/js/jquery.scrolly.min.js"></script>
+    <script src="../assets/js/browser.min.js"></script>
+    <script src="../assets/js/breakpoints.min.js"></script>
+    <script src="../assets/js/util.js"></script>
+    <script src="../assets/js/main.js"></script>
+  </body>
+</html>
